@@ -15,6 +15,7 @@
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-ble-plx": "^2.0.1",
+    "rxjs": "^6.6.2",
     "xstream": "^11.12.0",
     "xstream-from-callback": "^1.1.0"
   },

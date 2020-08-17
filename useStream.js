@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 
 /**
  * Resolve observable stream to value.
@@ -8,11 +8,16 @@ import { useState, useEffect } from 'react';
  */
 export default (stream, initialValue) => {
   const [state, setState] = useState(initialValue);
-
   useEffect(() => {
     const listener = {
-      next: setState,
+      next: (i) => {
+        console.log('[xstream] next >>> ', i);
+        setState(i);
+      },
+      error: (err) => console.error('[xstream] error >>>', err),
+      complete: () => console.log('[xstream] completed'),
     };
+    // console.log('useStream');
 
     stream.addListener(listener);
     return () => stream.removeListener(listener);

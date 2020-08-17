@@ -1,46 +1,47 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
   FlatList,
   Button,
   StyleSheet,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import useStream from './useStream';
+import useObservable from './useObservable';
 import adapterStateStream from './adapterStateStream';
-import deviceStream from './deviceStream';
+import adapterStateObservable from './adapterStateObservable';
+// import deviceStream from './deviceStream';
 
 const App = () => {
-  const adapterState = useStream(adapterStateStream, '');
-  const devices = useStream(deviceStream, {});
+  // const adapterState = useObservable(adapterStateStream);
+  const adapterStateXstream = useStream(adapterStateStream, '');
+  const adapterStateRxJs = useObservable(adapterStateObservable);
+  // const adapterStateRxJs = adapterStateObservable;
+  // const devices = useStream(deviceStream, {});
   // console.log('devices ', devices);
-  console.log('adapter state ', adapterState);
+  console.log('xstream adapter state ', adapterStateXstream);
+  console.log('rxjs adapter state ', adapterStateRxJs);
 
   return (
-    <SafeAreaView >
+    <SafeAreaView>
       <View>
-        <Text>Adapter State: {adapterState}</Text>
-        <Text>- - - - - - - - - - - - - - - -</Text>
-        <FlatList
+        <View style={{padding: 20}}>
+          <Text>xstream Adapter State: {adapterStateXstream}</Text>
+          <Text>rxjs Adapter State: {adapterStateRxJs}</Text>
+          <Text>- - - - - - - - - - - - - - - -</Text>
+        </View>
+        {/* <FlatList
           data={Object.values(devices)}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <Button
               color="grey"
               title={item.name || item.id}
               onPress={() => console.log('clicked...')}
             />
           )}
-          keyExtractor={device => device.id}
-        />
+          keyExtractor={(device) => device.id}
+        /> */}
       </View>
     </SafeAreaView>
   );
