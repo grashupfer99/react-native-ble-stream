@@ -12,6 +12,7 @@ import useObservable from './useObservable';
 import adapterStateStream from './adapterStateStream';
 import adapterStateObservable from './adapterStateObservable';
 // import deviceStream from './deviceStream';
+import deviceObservable from './deviceObservable';
 
 const App = () => {
   // const adapterState = useObservable(adapterStateStream);
@@ -19,9 +20,11 @@ const App = () => {
   const adapterStateRxJs = useObservable(adapterStateObservable);
   // const adapterStateRxJs = adapterStateObservable;
   // const devices = useStream(deviceStream, {});
-  // console.log('devices ', devices);
-  console.log('xstream adapter state ', adapterStateXstream);
-  console.log('rxjs adapter state ', adapterStateRxJs);
+  const devices = useObservable(deviceObservable);
+  // deviceStream();
+  console.log('devices >>>  ', devices);
+  // console.log('xstream adapter state ', adapterStateXstream);
+  // console.log('rxjs adapter state ', adapterStateRxJs);
 
   return (
     <SafeAreaView>
@@ -31,17 +34,19 @@ const App = () => {
           <Text>rxjs Adapter State: {adapterStateRxJs}</Text>
           <Text>- - - - - - - - - - - - - - - -</Text>
         </View>
-        {/* <FlatList
-          data={Object.values(devices)}
-          renderItem={({item}) => (
-            <Button
-              color="grey"
-              title={item.name || item.id}
-              onPress={() => console.log('clicked...')}
-            />
-          )}
-          keyExtractor={(device) => device.id}
-        /> */}
+        {devices && (
+          <FlatList
+            data={Object.values(devices)}
+            renderItem={({item}) => (
+              <Button
+                color="grey"
+                title={item.name || item.id}
+                onPress={() => console.log('clicked...')}
+              />
+            )}
+            keyExtractor={(device) => device.id}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
